@@ -1,23 +1,20 @@
-import org.apache.commons.text.similarity.LevenshteinDistance;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
-    static SortedMap<Integer, Integer> pairs = new TreeMap<>();
     static ArrayList<String> firstInput = new ArrayList<>();
     static ArrayList<String> secondInput = new ArrayList<>();
     static File input = new File("src\\main\\resources\\input.txt");
     static File output = new File("src\\main\\resources\\output.txt");
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
         getInput(firstInput, secondInput);
         getPairs(getTable(firstInput, secondInput));
@@ -26,8 +23,14 @@ public class Main {
 
     }
 
-    public static void getInput(ArrayList<String> firstInput, ArrayList<String> secondInput) throws FileNotFoundException {
-        Scanner scanner = new Scanner(input); //в примере все строки разделены пробелами, возможно это дефект форматирования,
+    public static void getInput(ArrayList<String> firstInput, ArrayList<String> secondInput) {
+        Scanner scanner; //в примере все строки разделены пробелами, возможно это дефект форматирования,
+        try {
+            scanner = new Scanner(input);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         int lineNumber = Integer.parseInt(scanner.nextLine()); // но я решил считать, что такой формат инпута правильный.
         for (int i =0; i < lineNumber; i++) {
             scanner.nextLine();         //поэтому я пропускаю строки после каждого считанного элемента
